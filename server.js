@@ -27,8 +27,13 @@ app.get("/api/hello/:name?", function (req, res) {
 // Timestamp endpoint
 app.get("/api/timestamp/:date_string?", function (req, res) {
   var date;
-  if (req.params.date_string) {
-    date = new Date(req.params.date_string);
+  var isUnix = /^\d+$/;
+  var date_string = req.params.date_string;
+  if (date_string) {
+    if (isUnix.test(date_string)){
+      date_string = parseInt(date_string, 10);
+    }
+    date = new Date(date_string);
   }
   else {
     date = new Date();
